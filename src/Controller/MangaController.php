@@ -17,7 +17,7 @@ class MangaController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('manga/index.html.twig', [
+        return $this->render('manga/baseAdministrateur.html.twig', [
             'controller_name' => 'MangaController',
         ]);
     }
@@ -44,6 +44,22 @@ class MangaController extends AbstractController
         }
         return $this->render('manga/addManga.html.twig',['resultat'=>$resultat,'form'=>$form->createView()
         ]);
+    }
+
+    /**
+     * @Route("liste-mangas", name="list_products")
+     * @param EntityManagerInterface $em
+     * @return Response
+     *
+     */
+    public function listMangas(EntityManagerInterface $em){
+        $repositoryManga= $em->getRepository('App\Entity\Manga');
+        $mangaCollection=$repositoryManga->findAll();
+
+        dump($mangaCollection);
+
+        return $this->render('manga/list_mangas.html.twig',['mangaCollection'=>$mangaCollection]);
+
     }
 
 }
