@@ -1,12 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajout d'un manga{% endblock %}
-
-{% block h1 %}
-    <h1 class="titremanga">Ajout d'un manga</h1>
-    <br><br>
-{% endblock %}
-
 {% block navbar %}
 
     <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark navbar">
@@ -59,33 +52,5 @@
             </ul>
         </div>
     </nav>
-
-
-{% endblock %}
-
-
-{% block body %}
-
-    <div>
-        {{ form_start(form) }}
-        <div class="my-custom-class-for-errors">
-            {{ form_errors(form) }}
-        </div>
-        <div class="row">
-
-            <div class="col">
-
-                {{ form_row(form.nbPage)}}
-            </div>
-            <div class="col" id="some-custom-id">
-                {{ form_row(form.numTome) }}
-
-            </div>
-        </div>
-        {{ form(form) }}
-
-        {{ form_end(form) }}
-
-    <br><br><br>
 
 {% endblock %}
