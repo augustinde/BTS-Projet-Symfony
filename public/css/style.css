@@ -4,10 +4,7 @@ body{
     color:white;
 
 }
-.titremanga{
-    text-align:center;
-    margin-top: 15px;
-}
+
 .navbar{
     height:60px;
     width:100%;
@@ -38,6 +35,8 @@ p{
 }
 h1{
     color:white;
+    text-align:center;
+    margin-top: 15px !important;
 }
 .imgbas{
     display:flex;
@@ -55,17 +54,18 @@ form{
     margin-left:auto;
     color:white;
 }
+
 select.form-control{
     margin-right:7px ;
 }
-#manga_save{
+#manga_save, #login_submit{
     background-color:#717D7E  ;
     border:none;
     height:50px;
     width:100%;
     transition:all 0.5s ease-in-out;
 }
-#manga_save:hover{
+#manga_save:hover, #login_submit:hover{
 
     background-color:#52BE80;
 
@@ -76,4 +76,9 @@ select.form-control{
     justify-content: space-around;
     flex-wrap: wrap;
     margin:20px 0;
+}
+
+form#form_login{
+    margin-top:5%;
+    margin-bottom:5%;
 }

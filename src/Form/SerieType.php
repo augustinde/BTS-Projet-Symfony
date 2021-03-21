@@ -4,7 +4,10 @@ namespace App\Form;
 
 use App\Entity\Categorie;
 use App\Entity\Editeur;
+use App\Entity\Personne;
 use App\Entity\Serie;
+use App\Repository\PersonneRepository;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -14,6 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SerieType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
@@ -34,8 +38,22 @@ class SerieType extends AbstractType
                 'class' => Editeur::class,
                 'choice_label' => 'nom'
             ])
-            ->add('scenariste')
-            ->add('dessinateur')
+            ->add('scenariste', EntityType::class, [
+                'class' => Personne::class,
+                'query_builder' => function(EntityRepository $er){
+                return $er->createQueryBuilder('p')
+                    ->where('p.type LIKE :type')
+                    ->setParameter('type', '%Scénariste%');
+                },
+            ])
+            ->add('dessinateur', EntityType::class, [
+                'class' => Personne::class,
+                'query_builder' => function(EntityRepository $er){
+                    return $er->createQueryBuilder('p')
+                        ->where('p.type LIKE :type')
+                        ->setParameter('type', '%Dessinateur%');
+                },
+            ])
             ->add('save', SubmitType::class, ['label'=>'Ajouter la série']);
         ;
     }

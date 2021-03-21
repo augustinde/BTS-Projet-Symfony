@@ -118,4 +118,9 @@ class Personne
     {
         $this->type = $type;
     }
+
+    public function __toString()
+    {
+        return $this->nom . " " . $this->prenom;
+    }
 }

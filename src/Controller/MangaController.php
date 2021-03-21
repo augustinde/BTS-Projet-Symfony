@@ -47,7 +47,7 @@ class MangaController extends AbstractController
     }
 
     /**
-     * @Route("liste-mangas", name="list_products")
+     * @Route("listemangas", name="list_mangas_admin")
      * @param EntityManagerInterface $em
      * @return Response
      *
