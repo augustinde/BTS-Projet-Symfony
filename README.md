@@ -17,3 +17,15 @@
 ## Installation des dépendances composer
 
   `composer install`
+
+## Créé un controller
+    
+    php bin/console make:controller
+
+## Créé un formulaire
+
+    php bin/console make:form
+
+## Créé la base de donnée
+
+    php bin/console doctrine:migrations:migrate
