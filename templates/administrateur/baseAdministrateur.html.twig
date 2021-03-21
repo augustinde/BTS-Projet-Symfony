@@ -3,7 +3,7 @@
 {% block navbar %}
 
     <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark navbar">
-        <a class="navbar-brand" href="#">Admin</a>
+        <a class="navbar-brand" href="{{ path('list_mangas_admin') }}">Administrateur</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -14,8 +14,8 @@
                         Manga
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Ajout manga</a>
-                        <a class="dropdown-item" href="#">Modifier manga</a>
+                        <a class="dropdown-item" href="{{ path('create_manga') }}">Ajout manga</a>
+                        <a class="dropdown-item" href="">Modifier manga</a>
                         <a class="dropdown-item" href="#">Supprimer manga</a>
                     </div>
                 </li>
@@ -24,7 +24,7 @@
                         Series
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Ajout de série</a>
+                        <a class="dropdown-item" href="{{ path('create_serie') }}">Ajout de série</a>
                         <a class="dropdown-item" href="#">Modifier série</a>
                         <a class="dropdown-item" href="#">Supprimer série</a>
                     </div>
@@ -34,6 +34,7 @@
                         Personne
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="{{ path('create_personne') }}">Ajouter une personne</a>
                         <a class="dropdown-item" href="#">Modifier personne</a>
                         <a class="dropdown-item" href="#">Supprimer personne</a>
 
@@ -41,13 +42,19 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown link
+                        Editeur
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="{{ path('create_editeur') }}">Ajouter un éditeur</a>
                         <a class="dropdown-item" href="#">Another action</a>
                         <a class="dropdown-item" href="#">Something else here</a>
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('utilisateur') }}">Site</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
                 </li>
             </ul>
         </div>
