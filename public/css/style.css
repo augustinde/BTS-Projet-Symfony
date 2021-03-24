@@ -82,3 +82,32 @@ form#form_login{
     margin-top:5%;
     margin-bottom:5%;
 }
+form{
+    width:20%;
+    flex-flow: wrap;
+
+}
+
+.cardb{
+    background:#1A5865;
+    color:white;
+
+}
+div.card{
+    border:none;
+}
+div.card:hover{
+    box-shadow: 0 0 11px rgba(255,255,255,.5);
+}
+a.btnclick{
+    background-color:#343a40;
+    box-shadow: 0 0 11px rgba(0,0,0,.1);
+    transition:all 0.5s ease-in-out;
+    width:100%;
+    border:none;
+
+}
+a.btnclick:hover{
+    background-color: #52BE80;
+
+}

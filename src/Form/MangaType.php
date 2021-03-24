@@ -4,8 +4,10 @@ namespace App\Form;
 
 use App\Entity\Manga;
 use App\Entity\Serie;
+use Doctrine\DBAL\Types\DateTimeType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -21,6 +23,10 @@ class MangaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('serie', EntityType::class,[
+                'class' => Serie::class,
+                'choice_label' => 'nom'
+            ])
             ->add('nbPage', TextType::class,array('label'=>'Nombre de page'))
             ->add('numTome',IntegerType ::class,array('label'=>'Numéros du Tome'))
             ->add('prixManga',MoneyType::class,array('label'=>'Prix du manga'))
@@ -38,11 +44,11 @@ class MangaType extends AbstractType
                 ],
             ])
 
-            ->add('dateParution', DateType::class,array('label'=>'Date de parution'))
-            ->add('serie', EntityType::class,[
-                'class' => Serie::class,
-                'choice_label' => 'nom'
+            ->add('dateParution', DateType::class, [
+                'widget'=>'single_text',
+                'format'=>'yyyy-MM-dd'
             ])
+
             ->add('save', SubmitType::class,['label'=>'Ajouter '])
         ;
     }
