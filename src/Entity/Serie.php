@@ -33,9 +33,9 @@ class Serie
      * @ORM\OneToMany(targetEntity="Manga", mappedBy="serie")
      */
     private $mangas;
-
+    
     /**
-     * @ORM\OneToOne(targetEntity="Categorie")
+     * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="series")
      * @ORM\JoinColumn(name="categ_id", referencedColumnName="id")
      */
     private $categorie;

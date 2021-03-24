@@ -6,9 +6,11 @@ use App\Entity\Manga;
 use App\Form\MangaType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class MangaController extends AbstractController
 {
@@ -26,9 +28,10 @@ class MangaController extends AbstractController
      * @Route("addmanga", name="create_manga")
      * @param Request $request
      * @param EntityManagerInterface $em
+     * @param SluggerInterface $slugger
      * @return Response
      */
-    public function formCreateManga(Request $request,EntityManagerInterface $em): Response
+    public function formCreateManga(Request $request,EntityManagerInterface $em, SluggerInterface $slugger): Response
     {
         $manga=new Manga();
         $form=$this->createForm(MangaType::class,$manga);
@@ -37,7 +40,27 @@ class MangaController extends AbstractController
         $resultat='Complétez le formulaire pour inserer un manga';
 
         if($form->isSubmitted()&&$form->isValid()){
-            dump($manga);
+
+            $imageFile = $form->get('image')->getData();
+
+            if($imageFile){
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                try{
+                    $imageFile->move(
+                        $this->getParameter('images_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e){
+
+                }
+                $manga->setImage($newFilename);
+            }else{
+                $manga->setImage('noImage.png');
+            }
+
             $em->persist($manga);
             $em->flush();
             $resultat='Produit inséré avec l\'id'.$manga->getId();
