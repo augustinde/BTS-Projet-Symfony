@@ -1,6 +1,12 @@
-{% extends 'administrateur/baseAdministrateur.html.twig' %}
+{% if is_granted('ROLE_ADMIN') %}
+    {% set base = 'administrateur/baseAdministrateur.html.twig' %}
+{% else %}
+    {% set base = 'utilisateur/baseUser.html.twig' %}
+{% endif %}
 
-{% block title %}Liste les mangas{% endblock %}
+    {% extends base %}
+
+{% block title %}Liste des mangas{% endblock %}
 
 {% block h1 %}
     <h1 class="titremanga">Liste des mangas</h1>
@@ -16,7 +22,12 @@
                 <div class="card-body cardb">
                     <h5 class="card-title">{{manga.serie.nom }}</h5>
                     <p class="card-text">{{ manga.descManga|striptags|slice(0,90) }}...</p>
-                    <a href="#" class="btn btn-primary btnclick">Y allez ...<i class="fas fa-reply"></i></a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="#" class="btn btn-warning">Modifier <i class="fas fa-reply"></i></a>
+                        <a href="{{ path('delete_manga', {idManga: manga.id}) }}" class="btn btn-danger">Supprimer <i class="fas fa-reply"></i></a>
+                    {% else %}
+                        <a href="#" class="btn btn-primary btnclick">Y allez ...<i class="fas fa-reply"></i></a>
+                    {% endif %}
                 </div>
             </div>
     {% endfor %}

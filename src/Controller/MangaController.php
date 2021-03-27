@@ -70,7 +70,7 @@ class MangaController extends AbstractController
     }
 
     /**
-     * @Route("listemangas", name="list_mangas_admin")
+     * @Route("listemangas", name="list_mangas")
      * @param EntityManagerInterface $em
      * @return Response
      *
@@ -85,4 +85,12 @@ class MangaController extends AbstractController
 
     }
 
+    /**
+     * @Route("deleteManga/{idManga}", name="delete_manga")
+     * @param EntityManagerInterface $em
+     */
+    public function deleteManga(EntityManagerInterface $em){
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+    }
 }
