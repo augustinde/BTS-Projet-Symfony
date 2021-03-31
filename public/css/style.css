@@ -112,3 +112,43 @@ a.btnclick:hover{
     background-color: #52BE80;
 
 }
+.englobletout{
+    display:flex;
+    margin-left: 200px;
+    margin-top: 70px;
+    width:auto;
+    padding:5px;
+    margin-right:20px;
+}
+
+
+.imageManga{
+    height:auto;
+    width:40%;
+
+
+
+
+}
+
+.descriptionManga{
+    color:white;
+    width:50%;
+
+
+
+
+    border-left:solid 4px white;
+    padding-left: 100px;
+    border-radius:20px;
+    font-size:22px;
+
+}
+.btstatus{
+    border:solid 2px white;
+    height:50px;
+    width:230px;
+    text-align:center;
+    padding-top:5px;
+    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+}
