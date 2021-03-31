@@ -7,56 +7,54 @@ use App\Entity\Editeur;
 use App\Entity\Manga;
 use App\Entity\Personne;
 use App\Entity\Serie;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use MongoDB\Driver\Manager;
 
 class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
 
-  /*      for($i = 0; $i < 5; $i++){
-            $categorie = new Categorie();
-            $categorie->setNom("categ".$i);
-            $manager->persist($categorie);
-        }
+        $categorie = new Categorie();
+        $categorie->setNom("Combat");
+        $manager->persist($categorie);
 
-        $personne = new Personne();
-        $personne->setNom("Paure");
-        $personne->setPrenom("Alain");
-        $personne->setType("Dessinateur");
-        $manager->persist($personne);
+        $dessinateur = new Personne();
+        $dessinateur->setNom("Paure");
+        $dessinateur->setPrenom("Alain");
+        $dessinateur->setType("Dessinateur");
+        $manager->persist($dessinateur);
 
-        $personne = new Personne();
-        $personne->setNom("Doe");
-        $personne->setPrenom("John");
-        $personne->setType("Scenariste");
-        $manager->persist($personne);
-
-        for($l = 0; $l < 5; $l++){
-            $editeur = new Editeur();
-            $editeur->setNom("Editeur".$l);
-            $manager->persist($editeur);
-
-        }
-
-        for($m = 0; $m < 5; $m++){
-            $serie = new Serie();
-            $serie->setNom("Serie".$m);
-            $serie->setCategorie($m);
-            $serie->setScenariste(1);
-            $serie->setDessinateur(2);
-            $serie->setEditeur($m);
-            $serie->setEtat("En cours de parution");
-            $manager->persist($serie);
-        }
-
-        for($n = 0; $n < 5; $n++){
-            $manga = new Manga();
-            $manga->setSerie();
-        }*/
+        $scenariste = new Personne();
+        $scenariste->setNom("Doe");
+        $scenariste->setPrenom("John");
+        $scenariste->setType("Scenariste");
+        $manager->persist($scenariste);
 
 
+        $editeur = new Editeur();
+        $editeur->setNom("Hermes");
+        $manager->persist($editeur);
+
+        $serie = new Serie();
+        $serie->setNom("Pokemon");
+        $serie->setCategorie($categorie);
+        $serie->setScenariste($scenariste);
+        $serie->setDessinateur($dessinateur);
+        $serie->setEditeur($editeur);
+        $serie->setEtat("En cours de parution");
+        $manager->persist($serie);
+
+        $manga = new Manga();
+        $manga->setSerie($serie);
+        $manga->setDescManga("Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique, sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion dans des applications de mise en page de texte, comme Aldus PageMaker.");
+        $manga->setImage("noImage.png");
+        $manga->setNbPage(25);
+        $manga->setNumTome(1);
+        $manga->setPrixManga(25.99);
+        $manga->setDateParution(new DateTime("now"));
+        $manager->persist($manga);
+        $manager->flush();
     }
 }
