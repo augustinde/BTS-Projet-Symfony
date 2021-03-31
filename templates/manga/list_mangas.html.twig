@@ -11,29 +11,6 @@
 {% block h1 %}
     <h1 class="titremanga">Liste des mangas</h1>
     <br><br>
-    <style>
-
-        .card .iconInfo{
-
-            position: absolute;
-            width:100%;
-            padding:10px 6px;
-            font-size: 16px;
-            top:0px;
-            left:0px;
-        }
-
-        .card .iconInfoEnCours{
-            background-color:#FFD02D;
-
-        }
-
-        .card .iconInfoTermine{
-            background-color: #28B463;
-            color:#fff;
-        }
-
-    </style>
 {% endblock %}
 
 
@@ -55,11 +32,13 @@
                     <h5 class="card-title">{{manga.serie.nom }}</h5>
                     <p class="card-text">{{ manga.descManga|striptags|slice(0,90) }}...</p>
                     {% if is_granted('ROLE_ADMIN') %}
+                    <div class="inputAdminManga">
                         <a href="#" class="btn btn-warning">Modifier <i class="fas fa-reply"></i></a>
                         <a href="{{ path('delete_manga', {idManga: manga.id}) }}" class="btn btn-danger">Supprimer <i class="fas fa-reply"></i></a>
-                    {% else %}
-                        <a href="#" class="btn btn-primary btnclick">Y allez ...<i class="fas fa-reply"></i></a>
+                    </div>
                     {% endif %}
+                    <br>
+                    <a href="{{ path('view_manga', {idManga: manga.id}) }}" class="btn btn-primary btnclick">Y allez ...<i class="fas fa-reply"></i></a>
                 </div>
             </div>
     {% endfor %}

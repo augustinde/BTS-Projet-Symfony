@@ -126,18 +126,11 @@ a.btnclick:hover{
     height:auto;
     width:40%;
 
-
-
-
 }
 
 .descriptionManga{
     color:white;
     width:50%;
-
-
-
-
     border-left:solid 4px white;
     padding-left: 100px;
     border-radius:20px;
@@ -151,4 +144,32 @@ a.btnclick:hover{
     text-align:center;
     padding-top:5px;
     background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+}
+
+
+.card .iconInfo{
+
+    position: absolute;
+    width:100%;
+    padding:10px 6px;
+    font-size: 16px;
+    top:0px;
+    left:0px;
+}
+
+.card .iconInfoEnCours{
+    background-color:#FFD02D;
+
+}
+
+.card .iconInfoTermine{
+    background-color: #28B463;
+    color:#fff;
+}
+
+
+.inputAdminManga{
+
+    display: flex;
+    justify-content: space-between;
 }
