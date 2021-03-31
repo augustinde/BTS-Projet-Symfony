@@ -89,8 +89,16 @@ class MangaController extends AbstractController
      * @Route("deleteManga/{idManga}", name="delete_manga")
      * @param EntityManagerInterface $em
      */
-    public function deleteManga(EntityManagerInterface $em){
+    public function deleteManga(int $idManga, EntityManagerInterface $em){
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $repositoryManga= $em->getRepository('App\Entity\Manga');
+        $manga=$repositoryManga->findOneBy(['id'=>$idManga]);
+
+        $em->remove($manga);
+        $em->flush();
+
+        return $this->render('manga/deleteManga.html.twig', ['manga' => $manga]);
 
     }
 
@@ -106,7 +114,7 @@ class MangaController extends AbstractController
         $repositoryManga=$em->getRepository('App\Entity\Manga');
         $manga=$repositoryManga->findOneBy(['id'=>$idManga]);
 
-    return $this->render('manga/viewManga.html.twig',['manga'=>$manga]);
+        return $this->render('manga/viewManga.html.twig',['manga'=>$manga]);
 
     }
 }
