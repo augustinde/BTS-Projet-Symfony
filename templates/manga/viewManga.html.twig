@@ -1,0 +1,47 @@
+{% if is_granted('ROLE_ADMIN') %}
+    {% set base = 'administrateur/baseAdministrateur.html.twig' %}
+{% else %}
+    {% set base = 'utilisateur/baseUser.html.twig' %}
+{% endif %}
+
+{% extends base %}
+{% block body %}
+    <h1>{{ manga.serie.nom}} - Tome {{ manga.numTome }}</h1>
+
+    <div class="englobletout">
+<div class="imageManga">
+    <img src="../../public/uploads/{{ manga.image }}" alt="image du manga">
+
+</div>
+    <div class="bordure">
+        <!--div ou y a rien juste une bordure-->
+    </div>
+
+    <div class="descriptionManga">
+        <br>
+        <p><b>Editeur</b> : {{ manga.serie.editeur.nom }}</p>
+        <p><b>Date parution</b> : {{ manga.dateParution|date("d/m/Y")}}</p>
+        <p><b>Catégorie</b> : {{ manga.serie.categorie.nom }}</p>
+        <br>
+        <p><b>Dessinateur</b> : {{ manga.serie.dessinateur.nom|upper }} {{ manga.serie.dessinateur.prenom }}</p>
+        <p><b>Scénariste</b> : {{ manga.serie.scenariste.nom|upper }} {{ manga.serie.scenariste.prenom }}</p>
+        <br>
+        <p><b>Nombre de page</b> : {{ manga.nbPage }}</p>
+        <p><b>Prix</b> : {{ manga.prixManga }} €</p>
+        <br>
+
+        <!--status-->
+        <div class="btstatus">
+            {{ manga.serie.etat}}
+        </div>
+
+    </div>
+    </div>
+
+    <br><br><br><br><br>
+
+
+
+
+
+{% endblock %}

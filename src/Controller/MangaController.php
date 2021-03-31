@@ -93,4 +93,20 @@ class MangaController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
     }
+
+    /**
+     * @Route("viewManga/{idManga}", name="view_manga")
+     * @param int $idManga
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function viewManga(int $idManga, EntityManagerInterface $em): Response
+    {
+
+        $repositoryManga=$em->getRepository('App\Entity\Manga');
+        $manga=$repositoryManga->findOneBy(['id'=>$idManga]);
+
+    return $this->render('manga/viewManga.html.twig',['manga'=>$manga]);
+
+    }
 }
