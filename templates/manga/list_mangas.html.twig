@@ -11,6 +11,29 @@
 {% block h1 %}
     <h1 class="titremanga">Liste des mangas</h1>
     <br><br>
+    <style>
+
+        .card .iconInfo{
+
+            position: absolute;
+            width:100%;
+            padding:10px 6px;
+            font-size: 16px;
+            top:0px;
+            left:0px;
+        }
+
+        .card .iconInfoEnCours{
+            background-color:#FFD02D;
+
+        }
+
+        .card .iconInfoTermine{
+            background-color: #28B463;
+            color:#fff;
+        }
+
+    </style>
 {% endblock %}
 
 
@@ -18,6 +41,15 @@
     <div class="rowManga">
         {% for manga in mangaCollection %}
             <div class="card" style="width: 18rem;">
+                <span class="iconInfo
+                    {% if manga.serie.etat == 'En cours de parution' %}
+                        iconInfoEnCours
+                        "><i class="far fa-edit"></i>
+                    {% else %}
+                        iconInfoTermine
+                        "><i class="fas fa-check"></i>
+                    {% endif %}
+                    Ce manga est {{ manga.serie.etat|lower }}.</span>
                 <img src="../../public/uploads/{{ manga.image }}" class="card-img-top" alt="...">
                 <div class="card-body cardb">
                     <h5 class="card-title">{{manga.serie.nom }}</h5>
@@ -32,11 +64,4 @@
             </div>
     {% endfor %}
     </div>
-
-
-
-
-
-
-
 {% endblock %}
