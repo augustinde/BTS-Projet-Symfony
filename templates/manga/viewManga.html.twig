@@ -31,7 +31,13 @@
         <br>
 
         <!--status-->
-        <div class="btstatus">
+        <div class="btstatus
+            {% if manga.serie.etat == 'En cours de parution' %}
+                btnencours">
+            {% else %}
+                btnterminer">
+            {% endif %}
+
             {{ manga.serie.etat}}
         </div>
 
