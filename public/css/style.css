@@ -27,7 +27,7 @@ footer{
     padding-bottom:15px;
 }
 p{
-    font-size:16px;
+    font-size:20px;
 }
 .ensemble_footer{
     padding-left:20px;
@@ -143,16 +143,20 @@ a.btnclick:hover{
     width:230px;
     text-align:center;
     padding-top:5px;
-    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
 }
 
+.btstatus.btnencours{
+    background-color:#F39C12;
+}
+.btstatus.btnterminer{
+    background-color:#28B463;
+}
 
 .card .iconInfo{
 
     position: absolute;
     width:100%;
     padding:10px 6px;
-    font-size: 16px;
     top:0px;
     left:0px;
 }
