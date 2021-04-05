@@ -39,13 +39,35 @@ class EditeurController extends AbstractController
         $resultat='Complétez le formulaire pour insérer un éditeur';
 
         if($form->isSubmitted()&&$form->isValid()){
-            dump($editeur);
-            $em->persist($editeur);
-            $em->flush();
-            $resultat='Editeur inséré avec l\'id'.$editeur->getId();
+
+            $repositoryEditeur=$em->getRepository('App\Entity\Editeur');
+            $checkEditeur=$repositoryEditeur->findBy(['nom'=>$editeur->getNom()]);
+
+            if($checkEditeur == null) {
+
+                $em->persist($editeur);
+                $em->flush();
+
+                $resultat = array(
+                    'res' => 'success',
+                    'message' => 'Editeur inséré avec l\'id '.$editeur->getId()
+                );
+
+            }else{
+                $resultat = array(
+                    'res' => 'error',
+                    'message' => 'Cet editeur existe déjà !'
+                );
+
+            }
         }
-        return $this->render('editeur/addediteur.html.twig',['resultat'=>$resultat,'form'=>$form->createView()
-        ]);
+        return $this->render(
+            'editeur/addediteur.html.twig',
+            [
+                'resultat'=>$resultat,
+                'form'=>$form->createView()
+            ]
+        );
 
     }
 

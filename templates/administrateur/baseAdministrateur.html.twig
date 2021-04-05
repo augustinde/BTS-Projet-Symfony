@@ -2,65 +2,60 @@
 
 {% block navbar %}
 
-    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark navbar">
-        <a class="navbar-brand" href="{{ path('list_mangas') }}">Administrateur</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Manga
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{{ path('create_manga') }}">Ajout manga</a>
-                        <a class="dropdown-item" href="">Modifier manga</a>
-                        <a class="dropdown-item" href="#">Supprimer manga</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Series
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{{ path('create_serie') }}">Ajout de série</a>
-                        <a class="dropdown-item" href="#">Modifier série</a>
-                        <a class="dropdown-item" href="#">Supprimer série</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Personne
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{{ path('create_personne') }}">Ajouter une personne</a>
-                        <a class="dropdown-item" href="#">Modifier personne</a>
-                        <a class="dropdown-item" href="#">Supprimer personne</a>
-
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Editeur
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{{ path('create_editeur') }}">Ajouter un éditeur</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
-            </ul>
-
+    <div class="barreMobile">
+        <div class="containerBarreMobile" id="ctb" onclick="FunctionIconMobile(this)">
+            <div class="bar1"></div>
+            <div id="b2" class="bar2"></div>
+            <div class="bar3"></div>
         </div>
-        <ul class="nav navbar-nav navbar-right">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('utilisateur') }}">Site</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
-            </li>
-        </ul>
-    </nav>
+    </div>
+
+    <ul class="navbar" id="navId">
+
+        <li class="nav1"><a href="{{ path('list_mangas') }}">Administrateur</a></li>
+        <div class="navdropdown nav2">
+            <button class="dropbtn">Manga
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="{{ path('create_manga') }}">Ajouter un manga</a>
+                <a href="{{ path('list_mangas') }}">Liste des mangas</a>
+            </div>
+        </div>
+
+        <div class="navdropdown nav3">
+            <button class="dropbtn">Série
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="{{ path('create_serie') }}">Ajouter une série</a>
+                <a href="#">Liste des séries</a>
+            </div>
+        </div>
+
+        <div class="navdropdown nav4">
+            <button class="dropbtn">Personne
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="{{ path('create_personne') }}">Ajouter une personne</a>
+                <a href="#">Liste des personnes</a>
+            </div>
+        </div>
+
+        <div class="navdropdown nav5">
+            <button class="dropbtn">Editeur
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="{{ path('create_editeur') }}">Ajouter un éditeur</a>
+                <a href="#">Liste des éditeurs</a>
+            </div>
+        </div>
+
+        <li class="nav7"><a href="{{ path('app_logout') }}">Déconnexion</a></li>
+
+    </ul>
 
 {% endblock %}
+

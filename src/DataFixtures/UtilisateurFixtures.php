@@ -35,7 +35,21 @@ class UtilisateurFixtures extends Fixture
             'nouveaupassword'
         ));
 
+        $user1 = new Utilisateur();
+        $user1->setUsername("user");
+        $user1->setRoles((array)"ROLE_USER");
+        $user1->setEmail("augustin.1201@outlook.fr");
+        $user1->setIsVerified(true);
+
+        $user1->setPassword($this->passwordEncoder->encodePassword(
+            $user1,
+            'nouveaupassword'
+        ));
+
         $manager->persist($user);
+        $manager->persist($user1);
         $manager->flush();
+
+
     }
 }

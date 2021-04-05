@@ -2,15 +2,22 @@
 
 namespace App\Controller;
 
+use App\Form\CommenterType;
+use App\Entity\Commenter;
 use App\Entity\Manga;
 use App\Form\MangaType;
+use DateTime;
+use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpParser\Comment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Twig\Extra\Intl\IntlExtension;
+
 
 class MangaController extends AbstractController
 {
@@ -39,34 +46,53 @@ class MangaController extends AbstractController
         $form->handleRequest($request);
         $resultat='Complétez le formulaire pour inserer un manga';
 
-        if($form->isSubmitted()&&$form->isValid()){
+        if($form->isSubmitted() && $form->isValid()){
 
-            $imageFile = $form->get('image')->getData();
+            $repositoryManga= $em->getRepository('App\Entity\Manga');
+            $checkSManga=$repositoryManga->findOneBy(['serie' => $manga->getSerie(), 'numTome' => $manga->getNumTome()]);
 
-            if($imageFile){
-                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+            if($checkSManga == null){
 
-                try{
-                    $imageFile->move(
-                        $this->getParameter('images_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e){
+                $imageFile = $form->get('image')->getData();
 
+                if($imageFile){
+                    $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                    try{
+                        $imageFile->move(
+                            $this->getParameter('images_directory'),
+                            $newFilename
+                        );
+                    } catch (FileException $e){
+
+                    }
+                    $manga->setImage($newFilename);
+                }else{
+                    $manga->setImage('noImage.png');
                 }
-                $manga->setImage($newFilename);
-            }else{
-                $manga->setImage('noImage.png');
-            }
 
-            $em->persist($manga);
-            $em->flush();
-            $resultat='Produit inséré avec l\'id'.$manga->getId();
+                $em->persist($manga);
+                $em->flush();
+                $resultat = array(
+                    'res' => 'success',
+                    'message' => 'Manga inséré avec l\'id '.$manga->getId()
+                );
+
+            }else{
+                $resultat = array(
+                    'res' => 'error',
+                    'message' => 'Ce manga existe déjà !'
+                );
+            }
         }
-        return $this->render('manga/addManga.html.twig',['resultat'=>$resultat,'form'=>$form->createView()
-        ]);
+        return $this->render(
+            'manga/addManga.html.twig',
+            [
+                'resultat'=>$resultat,
+                'form'=>$form->createView()
+            ]);
     }
 
     /**
@@ -104,17 +130,51 @@ class MangaController extends AbstractController
 
     /**
      * @Route("viewManga/{idManga}", name="view_manga")
+     * @param Request $request
      * @param int $idManga
      * @param EntityManagerInterface $em
      * @return Response
      */
-    public function viewManga(int $idManga, EntityManagerInterface $em): Response
+    public function viewManga(Request $request, int $idManga, EntityManagerInterface $em): Response
     {
 
         $repositoryManga=$em->getRepository('App\Entity\Manga');
         $manga=$repositoryManga->findOneBy(['id'=>$idManga]);
 
-        return $this->render('manga/viewManga.html.twig',['manga'=>$manga]);
+        $repositoryCommenter=$em->getRepository('App\Entity\Commenter');
+        $commentCollection=$repositoryCommenter->findBy(['manga'=>$idManga]);
+
+        $comment=new Commenter();
+        $form_comment=$this->createForm(CommenterType::class,$comment);
+        $form_comment->handleRequest($request);
+
+        $user = $this->getUser();
+        if($form_comment->isSubmitted() && $form_comment->isValid()){
+
+            $repositoryCommenter=$em->getRepository('App\Entity\Commenter');
+            $checkComment=$repositoryCommenter->findBy(['utilisateur'=>$user, 'manga' => $idManga]);
+
+            if($checkComment == null){
+
+                $comment->setNote($form_comment->get('note')->getData());
+                $comment->setManga($manga);
+                $comment->setUtilisateur($user);
+                $comment->setPostedAt(new DateTime('NOW', new DateTimeZone('Europe/Paris')));
+
+                $em->persist($comment);
+                $em->flush();
+            }
+
+            
+        }
+        return $this->render(
+            'manga/viewManga.html.twig',
+            [
+                'manga'=>$manga,
+                'form'=>$form_comment->createView(),
+                'commentCollection'=>$commentCollection,
+                'user'=>$user
+            ]);
 
     }
 }

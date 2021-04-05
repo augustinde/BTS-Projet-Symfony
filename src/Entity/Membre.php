@@ -17,29 +17,9 @@ class Membre extends Utilisateur
      */
     private $id;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Commenter", mappedBy="membre")
-     */
-    private $comments;
-
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getComments()
-    {
-        return $this->comments;
-    }
-
-    /**
-     * @param mixed $comments
-     */
-    public function setComments($comments): void
-    {
-        $this->comments = $comments;
-    }
 }

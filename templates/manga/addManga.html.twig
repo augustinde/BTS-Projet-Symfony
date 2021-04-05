@@ -11,6 +11,26 @@
 
 {% block body %}
 
+    {% if resultat.res is defined %}
+
+        <div id="snackbar">{{ resultat.message }}</div>
+        <script>
+            var couleur;
+            {% if resultat.res == 'error' %}
+                couleur = '#E74C3C';
+            {% else %}
+                couleur = '#27AE60';
+            {% endif %}
+            var x = document.getElementById("snackbar");
+
+            // Add the "show" class to DIV
+            x.className = "show";
+            x.style.backgroundColor = couleur;
+
+            // After 3 seconds, remove the show class from DIV
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);</script>
+    {% endif %}
+
     <div>
         {{ form_start(form) }}
         <div class="my-custom-class-for-errors">

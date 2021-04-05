@@ -4,50 +4,123 @@
     {% set base = 'utilisateur/baseUser.html.twig' %}
 {% endif %}
 
+{% set hasComment = false %}
+
 {% extends base %}
 {% block body %}
     <h1>{{ manga.serie.nom}} - Tome {{ manga.numTome }}</h1>
 
     <div class="englobletout">
-<div class="imageManga">
-    <img src="../../public/uploads/{{ manga.image }}" alt="image du manga">
-
-</div>
-    <div class="bordure">
-        <!--div ou y a rien juste une bordure-->
-    </div>
-
-    <div class="descriptionManga">
-        <br>
-        <p><b>Editeur</b> : {{ manga.serie.editeur.nom }}</p>
-        <p><b>Date parution</b> : {{ manga.dateParution|date("d/m/Y")}}</p>
-        <p><b>Catégorie</b> : {{ manga.serie.categorie.nom }}</p>
-        <br>
-        <p><b>Dessinateur</b> : {{ manga.serie.dessinateur.nom|upper }} {{ manga.serie.dessinateur.prenom }}</p>
-        <p><b>Scénariste</b> : {{ manga.serie.scenariste.nom|upper }} {{ manga.serie.scenariste.prenom }}</p>
-        <br>
-        <p><b>Nombre de page</b> : {{ manga.nbPage }}</p>
-        <p><b>Prix</b> : {{ manga.prixManga }} €</p>
-        <br>
-
-        <!--status-->
-        <div class="btstatus
-            {% if manga.serie.etat == 'En cours de parution' %}
-                btnencours">
-            {% else %}
-                btnterminer">
-            {% endif %}
-
-            {{ manga.serie.etat}}
+        <div class="imageManga">
+            <img src="../../public/uploads/{{ manga.image }}" alt="image du manga">
+        </div>
+        <div class="bordure">
+            <!--div ou y a rien juste une bordure-->
         </div>
 
+        <div class="descriptionManga">
+            <br>
+            <p><b>Editeur</b> : {{ manga.serie.editeur.nom }}</p>
+            <p><b>Date parution</b> : {{ manga.dateParution|date("d/m/Y")}}</p>
+            <p><b>Catégorie</b> : {{ manga.serie.categorie.nom }}</p>
+            <br>
+            <p><b>Dessinateur</b> : {{ manga.serie.dessinateur.nom|upper }} {{ manga.serie.dessinateur.prenom }}</p>
+            <p><b>Scénariste</b> : {{ manga.serie.scenariste.nom|upper }} {{ manga.serie.scenariste.prenom }}</p>
+            <br>
+            <p><b>Nombre de page</b> : {{ manga.nbPage }}</p>
+            <p><b>Prix</b> : {{ manga.prixManga }} €</p>
+            <br>
+
+            <!--status-->
+            <div class="btstatus
+                {% if manga.serie.etat == 'En cours de parution' %}
+                    btnencours">
+                {% else %}
+                    btnterminer">
+                {% endif %}
+
+                {{ manga.serie.etat}}
+            </div>
+
+        </div>
     </div>
-    </div>
+    <p class="descManga">Description : <br>{{ manga.descManga }}</p>
 
-    <br><br><br><br><br>
+    <br><br>
 
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
+        {% if hasComment != true %}
+            {{ form(form) }}
+        {% endif %}
 
+    {% else %}
 
+        <p style="text-align: center">Pour laisser un commentaire, vous devez être connecter.</p>
+
+    {% endif %}
+
+    <h2 class="titreComm">Commentaires</h2>
+
+    {% if(commentCollection|length > 0) %}
+
+        {% for comment in commentCollection %}
+
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+                {% if comment.utilisateur.username == app.user.username %}
+                    {% set hasComment = true %}
+                {% endif %}
+
+            {% endif %}
+
+            <div class="comment">
+                <div class="rateComment">
+                    {% if comment.note == 5 %}
+                        <i class="fa fa-fw fa-star fa-lg star-yellow"></i>
+                        <i class="fa fa-fw fa-star fa-lg star-yellow"></i>
+                        <i class="fa fa-fw fa-star fa-lg star-yellow"></i>
+                        <i class="fa fa-fw fa-star fa-lg star-yellow"></i>
+                        <i class="fa fa-fw fa-star fa-lg star-yellow"></i>
+                    {% elseif comment.note == 4 %}
+                        <i class="fa fa-fw fa-star fa-lg star-yellow"></i>
+                        <i class="fa fa-fw fa-star fa-lg star-yellow"></i>
+                        <i class="fa fa-fw fa-star fa-lg star-yellow"></i>
+                        <i class="fa fa-fw fa-star fa-lg star-yellow"></i>
+                        <i class="fa fa-fw fa-star fa-lg"></i>
+                    {% elseif comment.note == 3 %}
+                        <i class="fa fa-fw fa-star fa-lg star-yellow"></i>
+                        <i class="fa fa-fw fa-star fa-lg star-yellow"></i>
+                        <i class="fa fa-fw fa-star fa-lg star-yellow"></i>
+                        <i class="fa fa-fw fa-star fa-lg"></i>
+                        <i class="fa fa-fw fa-star fa-lg"></i>
+                    {% elseif comment.note == 2 %}
+                        <i class="fa fa-fw fa-star fa-lg star-yellow"></i>
+                        <i class="fa fa-fw fa-star fa-lg star-yellow"></i>
+                        <i class="fa fa-fw fa-star fa-lg"></i>
+                        <i class="fa fa-fw fa-star fa-lg"></i>
+                        <i class="fa fa-fw fa-star fa-lg"></i>
+                    {% elseif comment.note == 1 %}
+                        <i class="fa fa-fw fa-star fa-lg star-yellow"></i>
+                        <i class="fa fa-fw fa-star fa-lg"></i>
+                        <i class="fa fa-fw fa-star fa-lg"></i>
+                        <i class="fa fa-fw fa-star fa-lg"></i>
+                        <i class="fa fa-fw fa-star fa-lg"></i>
+                    {% endif %}
+                </div>
+
+                    <span>Posté par <strong>{{ comment.utilisateur.username }}</strong>, le {{ comment.postedAt|format_datetime('short', 'short', locale='fr') }}</span>
+
+                <p>"{{ comment.commentaire }}"</p>
+                {% if hasComment %}
+                    <a class="modifComment" href="{{ path('update_comment', {idManga: manga.id, idUtilisateur: comment.utilisateur.id, idComment : comment.id}) }}">Modifier</a>
+                    <a class="deleteComment" href="{{ path('delete_comment', {idManga: manga.id, idUtilisateur: comment.utilisateur.id, idComment : comment.id}) }}">Supprimer</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+    {% else %}
+        <p style="margin-left:20px;">Il n'y a aucun commentaire pour ce manga.</p>
+    {% endif %}
 
 {% endblock %}
