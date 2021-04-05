@@ -29,7 +29,7 @@
                     Ce manga est {{ manga.serie.etat|lower }}.</span>
                 <img src="../../public/uploads/{{ manga.image }}" class="card-img-top" alt="...">
                 <div class="card-body cardb">
-                    <h5 class="card-title">{{manga.serie.nom }}</h5>
+                    <h5 class="card-title">{{manga.serie.nom }} - Tome {{ manga.numTome }}</h5>
                     <p class="card-text">{{ manga.descManga|striptags|slice(0,90) }}...</p>
                     {% if is_granted('ROLE_ADMIN') %}
                     <div class="inputAdminManga">

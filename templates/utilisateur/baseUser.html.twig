@@ -2,43 +2,27 @@
 
 {% block navbar %}
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{{ path('list_mangas') }}">Utilisateur</a><!--mettre l'affichage de l'utilisateur-->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Manga <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Séries</a>
-                </li>
-                {% if is_granted('ROLE_USER')%}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_register') }}">Crée un compte</a>
-                    </li>
-                {% endif %}
-                {% if is_granted('ROLE_ADMIN') %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('list_mangas')  }}">Panel admin</a>
-                </li>
-                {% endif %}
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0 form">
-                <input class="form-control mr-sm-2" type="search" placeholder="Rechercher un manga.." aria-label="Search">
-                <button class="btn btn-outline-success my-6 my-sm-0" type="submit">Rechercher</button>
-            </form>
+    <div class="barreMobile">
+        <div class="containerBarreMobile" id="ctb" onclick="FunctionIconMobile(this)">
+            <div class="bar1"></div>
+            <div id="b2" class="bar2"></div>
+            <div class="bar3"></div>
         </div>
-    </nav>
+    </div>
+
+    <ul class="navbar" id="navId">
+
+        <li class="nav1"><a href="{{ path('list_mangas') }}">Utilisateur</a></li>
+        <li class="nav2"><a href="{{ path('list_mangas') }}">Manga</a></li>
+        <li class="nav3"><a href="">Séries</a></li>
+
+        {% if is_granted('ROLE_USER')%}
+            <li class="nav4"><a href="{{ path('app_logout') }}">Déconnexion</a></li>
+        {% else %}
+            <li class="nav5"><a href="{{ path('app_register') }}">Inscription</a></li>
+            <li class="nav6"><a href="{{ path('app_login') }}">Connexion</a></li>
+        {% endif %}
+    </ul>
+
 
 {% endblock %}

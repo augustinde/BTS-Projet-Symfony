@@ -18,15 +18,4 @@ class UtilisateurController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("accueil", name="app_accueil")
-     * @return Response
-     */
-    public function accueil() : Response
-    {
-        return $this->render('utilisateur/accueil.html.twig');
-    }
-
-
-
 }

@@ -12,12 +12,19 @@ class Commenter
 {
 
     /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
      * @ORM\Column(type="text")
      */
     private $commentaire;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="integer")
      */
     private $note;
 
@@ -27,14 +34,12 @@ class Commenter
     private $posted_at;
 
     /**
-     * @ORM\Id()
-     * @ORM\ManyToOne(targetEntity="Membre", inversedBy="comments")
-     * @ORM\JoinColumn(name="membre_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Utilisateur", inversedBy="comments")
+     * @ORM\JoinColumn(name="utilisateur_id", referencedColumnName="id", nullable=false)
      */
-    private $membre;
+    private $utilisateur;
 
     /**
-     * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="Manga", inversedBy="comments")
      * @ORM\JoinColumn(name="manga_id", referencedColumnName="id", nullable=false)
      */
@@ -64,34 +69,6 @@ class Commenter
         return $this;
     }
 
-    public function getPostedAt(): ?\DateTimeInterface
-    {
-        return $this->posted_at;
-    }
-
-    public function setPostedAt(\DateTimeInterface $posted_at): self
-    {
-        $this->posted_at = $posted_at;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMembre()
-    {
-        return $this->membre;
-    }
-
-    /**
-     * @param mixed $membre
-     */
-    public function setMembre($membre): void
-    {
-        $this->membre = $membre;
-    }
-
     /**
      * @return mixed
      */
@@ -106,5 +83,53 @@ class Commenter
     public function setManga($manga): void
     {
         $this->manga = $manga;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUtilisateur()
+    {
+        return $this->utilisateur;
+    }
+
+    /**
+     * @param mixed $utilisateur
+     */
+    public function setUtilisateur($utilisateur): void
+    {
+        $this->utilisateur = $utilisateur;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPostedAt()
+    {
+        return $this->posted_at;
+    }
+
+    /**
+     * @param mixed $posted_at
+     */
+    public function setPostedAt($posted_at): void
+    {
+        $this->posted_at = $posted_at;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
     }
 }

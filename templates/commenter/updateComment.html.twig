@@ -1,20 +1,23 @@
-{% extends 'administrateur/baseAdministrateur.html.twig' %}
+{% if is_granted('ROLE_ADMIN') %}
+    {% set base = 'administrateur/baseAdministrateur.html.twig' %}
+{% else %}
+    {% set base = 'utilisateur/baseUser.html.twig' %}
+{% endif %}
 
-{% block title %}Ajout d'un éditeur!{% endblock %}
+    {% extends base %}
 
+{% block title %}Modification commentaire{% endblock %}
 
 {% block body %}
-    <h1 style="margin:20px 0px 0px 0px; text-align: center;">Ajout d'un éditeur</h1>
-
     {% if resultat.res is defined %}
 
         <div id="snackbar">{{ resultat.message }}</div>
         <script>
             var couleur;
             {% if resultat.res == 'error' %}
-                couleur = '#E74C3C';
+            couleur = '#E74C3C';
             {% else %}
-                couleur = '#27AE60';
+            couleur = '#27AE60';
             {% endif %}
             var x = document.getElementById("snackbar");
 
@@ -25,10 +28,20 @@
             // After 3 seconds, remove the show class from DIV
             setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);</script>
     {% endif %}
+    {% if rep %}
+        <br>
+        <br>
+        <h1 class="titremanga">Le commentaire n'existe pas !</h1>
+        <br><br>
+    {% else %}
+        <br>
+        <br>
+        <h1 class="titremanga">Modifier ton commentaire du tome {{ comment.manga.numTome }} de {{ comment.manga.serie.nom }}</h1>
+        <br><br>
+    {% endif %}
 
     <div style="margin:50px 0px;">
         {{ form(form) }}
     </div>
-
 
 {% endblock %}

@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @UniqueEntity(fields={"username"}, message="Un compte est déjà existant avec ce pseudo.")
+ * @UniqueEntity(fields={"email"}, message="Un compte est déjà existant avec cet email.")
  */
 class Utilisateur implements UserInterface
 {
@@ -47,6 +48,12 @@ class Utilisateur implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $isVerified = false;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Commenter", mappedBy="membre")
+     */
+    private $comments;
+
 
     public function getId(): ?int
     {
@@ -146,5 +153,21 @@ class Utilisateur implements UserInterface
         $this->isVerified = $isVerified;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param mixed $comments
+     */
+    public function setComments($comments): void
+    {
+        $this->comments = $comments;
     }
 }

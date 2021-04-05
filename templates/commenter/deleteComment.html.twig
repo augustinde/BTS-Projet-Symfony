@@ -1,0 +1,28 @@
+{% if is_granted('ROLE_ADMIN') %}
+    {% set base = 'administrateur/baseAdministrateur.html.twig' %}
+{% else %}
+    {% set base = 'utilisateur/baseUser.html.twig' %}
+{% endif %}
+
+    {% extends base %}
+
+{% block title %}Commentaire supprimé{% endblock %}
+
+{% block h1 %}
+    {% if rep %}
+        <br>
+        <br>
+        <h1 class="titremanga">Le commentaire n'existe pas !</h1>
+        <br><br>
+    {% else %}
+        <br>
+        <br>
+        <h1 class="titremanga">Ton commentaire sur le Tome {{ comment.manga.numTome }} de {{ comment.manga.serie.nom}} à été supprimé.</h1>
+        <br><br>
+    {% endif %}
+    <div style="text-align:center; width:100%; font-size:20px">
+        <a href="{{ path('view_manga', {idManga: idManga}) }}">Retourner sur le manga</a>
+    </div>
+    <br>
+    <br><br><br><br><br>
+{% endblock %}
