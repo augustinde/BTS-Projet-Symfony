@@ -410,6 +410,7 @@ a.btnclick:hover{
     left:20px;
 }
 
+
 .rateBox{
     display:flex;
     flex-direction:row-reverse;
@@ -417,12 +418,8 @@ a.btnclick:hover{
     margin:10px;
 }
 
-.rate{
-    content: "\f005";
-}
-
 input[type="radio"]{
-   /* display:none;*/
+    display:none;
 }
 
 input[type="radio"] + label  .fa {

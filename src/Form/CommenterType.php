@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Commenter;
+use App\Form\Type\RadioStarType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -11,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Choice;
 
 class CommenterType extends AbstractType
 {
@@ -18,18 +20,16 @@ class CommenterType extends AbstractType
     {
         $builder
             ->add('commentaire', TextareaType::class)
-            ->add('note', ChoiceType::class,
-                [
-                    'choices' =>
-                        [
-                        '1' => '1',
-                        '2' => '2',
-                        '3' => '3',
-                        '4' => '4',
-                        '5' => '5'
-                        ],
-                    'expanded' => true
-                ])
+            ->add('note', RadioStarType::class, [
+                'choices' => [
+                    '5' => '5',
+                    '4' => '4',
+                    '3' => '3',
+                    '2' => '2',
+                    '1' => '1'
+                ],
+                'expanded' => true
+            ])
             ->add('save', SubmitType::class,['label'=>'Commenter '])
         ;
     }

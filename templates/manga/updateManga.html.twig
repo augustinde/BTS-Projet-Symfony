@@ -1,0 +1,43 @@
+{% if is_granted('ROLE_ADMIN') %}
+    {% set base = 'administrateur/baseAdministrateur.html.twig' %}
+{% else %}
+    {% set base = 'utilisateur/baseUser.html.twig' %}
+{% endif %}
+
+    {% extends base %}
+
+{% block title %}Mise à jour du manga{% endblock %}
+
+{% block h1 %}
+    <h1 class="titremanga">Mise à jour du manga</h1>
+    <br><br>
+{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.serie) }}
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col">
+
+            {{ form_row(form.nbPage)}}
+        </div>
+        <div class="col" id="some-custom-id">
+            {{ form_row(form.numTome) }}
+
+        </div>
+    </div>
+
+    {{ form_row(form.image, {'value' : manga.image }) }}
+
+    {{ form(form) }}
+
+    {{ form_end(form) }}
+{% endblock %}
