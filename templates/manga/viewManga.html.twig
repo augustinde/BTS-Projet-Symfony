@@ -8,6 +8,27 @@
 
 {% extends base %}
 {% block body %}
+
+    {% if resultat.res is defined %}
+
+        <div id="snackbar">{{ resultat.message }}</div>
+        <script>
+            var couleur;
+            {% if resultat.res == 'error' %}
+            couleur = '#E74C3C';
+            {% else %}
+            couleur = '#27AE60';
+            {% endif %}
+            var x = document.getElementById("snackbar");
+
+            // Add the "show" class to DIV
+            x.className = "show";
+            x.style.backgroundColor = couleur;
+
+            // After 3 seconds, remove the show class from DIV
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);</script>
+    {% endif %}
+
     <h1>{{ manga.serie.nom}} - Tome {{ manga.numTome }}</h1>
 
     <div class="englobletout">
@@ -51,7 +72,22 @@
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
 
         {% if hasComment != true %}
-            {{ form(form) }}
+            <div style="text-align: center">
+
+                <h3>Ajouter un commentaire</h3>
+                {{ form_start(form) }}
+                <div class="my-custom-class-for-errors">
+                    {{ form_errors(form) }}
+                </div>
+
+                <div class="col">
+                        {{ form_row(form.commentaire) }}
+                        <label for="">Note</label>
+                        {{ form_row(form.note) }}
+                        {{ form_row(form.save) }}
+                </div>
+                {{ form_end(form) }}
+            </div>
         {% endif %}
 
     {% else %}

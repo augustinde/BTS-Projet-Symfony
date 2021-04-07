@@ -33,7 +33,7 @@
                     <p class="card-text">{{ manga.descManga|striptags|slice(0,90) }}...</p>
                     {% if is_granted('ROLE_ADMIN') %}
                     <div class="inputAdminManga">
-                        <a href="#" class="btn btn-warning">Modifier <i class="fas fa-reply"></i></a>
+                        <a href="{{ path('update_manga', {idManga: manga.id}) }}" class="btn btn-warning">Modifier <i class="fas fa-reply"></i></a>
                         <a href="{{ path('delete_manga', {idManga: manga.id}) }}" class="btn btn-danger">Supprimer <i class="fas fa-reply"></i></a>
                     </div>
                     {% endif %}

@@ -11,6 +11,7 @@ use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpParser\Comment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -112,6 +113,55 @@ class MangaController extends AbstractController
     }
 
     /**
+     * @Route("updateManga/{idManga}", name="update_manga")
+     * @param Request $request
+     * @param int $idManga
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function updateManga(Request $request, int $idManga, EntityManagerInterface $em, SluggerInterface $slugger){
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $repositoryManga = $em->getRepository('App\Entity\Manga');
+        $manga = $repositoryManga->findOneBy(['id' => $idManga]);
+
+        $form_update_manga = $this->createForm(MangaType::class, $manga);
+        $form_update_manga->handleRequest($request);
+
+        if($form_update_manga->isSubmitted() && $form_update_manga->isValid()){
+
+            $imageFile = $form_update_manga->get('image')->getData();
+
+            if($imageFile){
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                try{
+                    $imageFile->move(
+                        $this->getParameter('images_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e){
+
+                }
+                $manga->setImage($newFilename);
+            }else{
+                $manga->setImage('noImage.png');
+            }
+
+            $em->flush();
+        }
+
+        return $this->render(
+            'manga/updateManga.html.twig',
+            [
+                'manga'=>$manga,
+                'form'=>$form_update_manga->createView(),
+            ]);
+    }
+
+    /**
      * @Route("deleteManga/{idManga}", name="delete_manga")
      * @param EntityManagerInterface $em
      */
@@ -137,18 +187,17 @@ class MangaController extends AbstractController
      */
     public function viewManga(Request $request, int $idManga, EntityManagerInterface $em): Response
     {
+        $resultat='';
 
         $repositoryManga=$em->getRepository('App\Entity\Manga');
         $manga=$repositoryManga->findOneBy(['id'=>$idManga]);
-
-        $repositoryCommenter=$em->getRepository('App\Entity\Commenter');
-        $commentCollection=$repositoryCommenter->findBy(['manga'=>$idManga]);
 
         $comment=new Commenter();
         $form_comment=$this->createForm(CommenterType::class,$comment);
         $form_comment->handleRequest($request);
 
         $user = $this->getUser();
+
         if($form_comment->isSubmitted() && $form_comment->isValid()){
 
             $repositoryCommenter=$em->getRepository('App\Entity\Commenter');
@@ -163,14 +212,28 @@ class MangaController extends AbstractController
 
                 $em->persist($comment);
                 $em->flush();
-            }
+                $resultat = array(
+                    'res' => 'success',
+                    'message' => 'Commentaire ajouté.'
+                );
 
+            }else{
+                $resultat = array(
+                    'res' => 'error',
+                    'message' => 'Erreur lors de l\'ajout du commentaire.'
+                );
+            }
             
         }
+
+        $repositoryCommenter=$em->getRepository('App\Entity\Commenter');
+        $commentCollection=$repositoryCommenter->findBy(['manga'=>$idManga]);
+
         return $this->render(
             'manga/viewManga.html.twig',
             [
                 'manga'=>$manga,
+                'resultat'=>$resultat,
                 'form'=>$form_comment->createView(),
                 'commentCollection'=>$commentCollection,
                 'user'=>$user
