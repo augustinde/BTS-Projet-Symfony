@@ -71,4 +71,17 @@ class EditeurController extends AbstractController
 
     }
 
+    /**
+     * @Route("listeEditeur", name="list-editeur")
+     * @param EntityManagerInterface $em
+     */
+
+    public function listEditeur(EntityManagerInterface $em): Response{
+        $repositoryEditeur= $em->getRepository('App\Entity\Editeur');
+        $editeurCollection=$repositoryEditeur->findAll();
+
+
+        return $this->render('editeur/listEditeur.html.twig',['editeurCollection'=>$editeurCollection]);
+    }
+
 }

@@ -484,3 +484,7 @@ input[type="radio"]:checked ~ label .fa-star:before{
 .titreComm{
     margin-left: 20px;
 }
+
+.listeediteur{
+    font-size:28px;
+}
