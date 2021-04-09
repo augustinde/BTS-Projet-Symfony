@@ -146,8 +146,6 @@ class MangaController extends AbstractController
 
                 }
                 $manga->setImage($newFilename);
-            }else{
-                $manga->setImage('noImage.png');
             }
 
             $em->flush();

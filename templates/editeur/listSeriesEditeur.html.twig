@@ -1,0 +1,21 @@
+{% if is_granted('ROLE_ADMIN') %}
+    {% set base = 'administrateur/baseAdministrateur.html.twig' %}
+{% else %}
+    {% set base = 'utilisateur/baseUser.html.twig' %}
+{% endif %}
+
+    {% extends base %}
+
+{% block title %}Séries éditer par {% endblock %}
+
+{% block h1 %}
+    <h1 class="titremanga">Séries éditer par </h1>
+    <br><br>
+{% endblock %}
+
+
+{% block body %}
+
+
+
+{% endblock %}
