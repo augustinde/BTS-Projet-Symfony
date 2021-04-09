@@ -1,0 +1,33 @@
+{% if is_granted('ROLE_ADMIN') %}
+    {% set base = 'administrateur/baseAdministrateur.html.twig' %}
+{% else %}
+    {% set base = 'utilisateur/baseUser.html.twig' %}
+{% endif %}
+
+    {% extends base %}
+
+{% block title %}Séries de {{ personne.nom }} {{ personne.prenom }}{% endblock %}
+
+{% block h1 %}
+    <br>
+    <br>
+    <h1 class="titremanga">Séries de {{ personne.nom }} {{ personne.prenom }}</h1>
+    <br><br>
+{% endblock %}
+
+
+{% block body %}
+    <ul>
+        {% for serie in serieCollection %}
+
+            <li>{{ serie.nom }} : <a href="{{ path('view_series_categ', {idCateg: serie.categorie.id}) }}">{{ serie.categorie.nom }}</a> - ({{ serie.etat }})</li>
+
+        {% endfor %}
+
+    </ul>
+    <br>
+    <br>
+    <br>
+    <br>
+
+{% endblock %}

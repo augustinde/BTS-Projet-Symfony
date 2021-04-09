@@ -47,6 +47,25 @@ class PersonneController extends AbstractController
         return $this->render('personne/addpersonne.html.twig',['resultat'=>$resultat,'form'=>$form->createView()
         ]);
 
+    }
+
+    /**
+     * @Route("viewSeriesPersonne/{idPersonne}", name="view_series_personne")
+     * @param int $idPersonne
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function listSeries(int $idPersonne, EntityManagerInterface $em):Response
+    {
+        $repoSerie = $em->getRepository("App\Entity\Serie");
+        $serieCollection = $repoSerie->findByDessinateurOrScenariste($idPersonne);
+        dump($serieCollection);
+        $repoPersonne = $em->getRepository("App\Entity\Personne");
+        $personne = $repoPersonne->findOneBy(['id' => $idPersonne]);
+
+
+        return $this->render('personne/listSeriesPersonne.html.twig',['serieCollection'=>$serieCollection, 'personne' => $personne]);
 
     }
+
 }
