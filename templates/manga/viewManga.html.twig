@@ -41,12 +41,12 @@
 
         <div class="descriptionManga">
             <br>
-            <p><b>Editeur</b> : {{ manga.serie.editeur.nom }}</p>
+            <p><b>Editeur</b> : <a href="{{ path('view_series_editeur', {idEditeur: manga.serie.editeur.id}) }}">{{ manga.serie.editeur.nom }}</a></p>
             <p><b>Date parution</b> : {{ manga.dateParution|date("d/m/Y")}}</p>
-            <p><b>Catégorie</b> : {{ manga.serie.categorie.nom }}</p>
+            <p><b>Catégorie</b> : <a href="{{ path('view_series_categ', {idCateg: manga.serie.categorie.id}) }}">{{ manga.serie.categorie.nom }}</a></p>
             <br>
-            <p><b>Dessinateur</b> : {{ manga.serie.dessinateur.nom|upper }} {{ manga.serie.dessinateur.prenom }}</p>
-            <p><b>Scénariste</b> : {{ manga.serie.scenariste.nom|upper }} {{ manga.serie.scenariste.prenom }}</p>
+            <p><b>Dessinateur</b> : <a href="{{ path('view_series_personne', {idPersonne: manga.serie.dessinateur.id}) }}">{{ manga.serie.dessinateur.nom|upper }} {{ manga.serie.dessinateur.prenom }}</a></p>
+            <p><b>Scénariste</b> : <a href="{{ path('view_series_personne', {idPersonne: manga.serie.scenariste.id}) }}">{{ manga.serie.scenariste.nom|upper }} {{ manga.serie.scenariste.prenom }}</a></p>
             <br>
             <p><b>Nombre de page</b> : {{ manga.nbPage }}</p>
             <p><b>Prix</b> : {{ manga.prixManga }} €</p>

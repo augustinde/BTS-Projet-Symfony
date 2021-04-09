@@ -1,0 +1,40 @@
+{% if is_granted('ROLE_ADMIN') %}
+    {% set base = 'administrateur/baseAdministrateur.html.twig' %}
+{% else %}
+    {% set base = 'utilisateur/baseUser.html.twig' %}
+{% endif %}
+
+{% extends base %}
+
+{% block title %}Séries de catégorie {{ categorie.nom }}{% endblock %}
+
+{% block h1 %}
+    <br>
+    <br>
+    <h1 class="titremanga">Séries de catégorie {{ categorie.nom }}</h1>
+    <br><br>
+{% endblock %}
+
+
+{% block body %}
+    <ul>
+        {% for serie in serieCollection %}
+
+            <li>
+                {{ serie.nom }} : {{ serie.etat }}
+                <ul>
+                    <li>Dessinateur : <a href="{{ path('view_series_personne', {idPersonne: serie.dessinateur.id}) }}">{{ serie.dessinateur.nom }} {{ serie.dessinateur.prenom }}</a></li>
+                    <li>Scénariste : <a href="{{ path('view_series_personne', {idPersonne: serie.scenariste.id}) }}">{{ serie.scenariste.nom }} {{ serie.scenariste.prenom }}</a></li>
+                    <li>Editeur : <a href="{{ path('view_series_editeur', {idEditeur: serie.editeur.id}) }}">{{ serie.editeur.nom }}</a></li>
+                </ul>
+            </li>
+
+        {% endfor %}
+
+    </ul>
+    <br>
+    <br>
+    <br>
+    <br>
+
+{% endblock %}

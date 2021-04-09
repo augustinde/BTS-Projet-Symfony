@@ -6,16 +6,28 @@
 
     {% extends base %}
 
-{% block title %}Séries éditer par {% endblock %}
+{% block title %}Séries éditer par {{ editeur.nom }}{% endblock %}
 
 {% block h1 %}
-    <h1 class="titremanga">Séries éditer par </h1>
+    <br>
+    <br>
+    <h1 class="titremanga">Séries éditer par {{ editeur.nom }}</h1>
     <br><br>
 {% endblock %}
 
 
 {% block body %}
 
+    <ul>
+    {% for serie in serieCollection %}
 
+        <li>{{ serie.nom }} : <a href="{{ path('view_series_categ', {idCateg: serie.categorie.id}) }}">{{ serie.categorie.nom }}</a> - ({{ serie.etat }})</li>
+
+    {% endfor %}
+   </ul>
+    <br>
+    <br>
+    <br>
+    <br>
 
 {% endblock %}

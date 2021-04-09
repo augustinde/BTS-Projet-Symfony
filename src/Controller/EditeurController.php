@@ -84,4 +84,23 @@ class EditeurController extends AbstractController
         return $this->render('editeur/listEditeur.html.twig',['editeurCollection'=>$editeurCollection]);
     }
 
+
+    /**
+     * @Route("viewSeriesEditeur/{idEditeur}", name="view_series_editeur")
+     * @param int $idEditeur
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function listSeries(int $idEditeur, EntityManagerInterface $em): Response
+    {
+        $repoSerie = $em->getRepository("App\Entity\Serie");
+        $serieCollection = $repoSerie->findBy(['editeur' => $idEditeur]);
+
+        $repoEditeur = $em->getRepository("App\Entity\Editeur");
+        $editeur = $repoEditeur->findOneBy(['id' => $idEditeur]);
+
+        return $this->render('editeur/listSeriesEditeur.html.twig',['serieCollection'=>$serieCollection, 'editeur' => $editeur]);
+
+    }
+
 }
