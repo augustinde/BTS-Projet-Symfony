@@ -34,7 +34,7 @@ class MangaType extends AbstractType
             ->add('image', FileType::class, [
                 'label' => 'Insérez une image',
                 'mapped' => false,
-                'required' => true,
+                'required' => false,
                 'constraints' => [
                     new File([
                         'maxSize' => '5M',
