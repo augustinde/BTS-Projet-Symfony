@@ -18,16 +18,13 @@
 
 {% block body %}
 
-    <ul>
+<div class="conteneurCollection">
     {% for serie in serieCollection %}
+        <div class="serieCategorie">
 
-        <li>{{ serie.nom }} : <a href="{{ path('view_series_categ', {idCateg: serie.categorie.id}) }}">{{ serie.categorie.nom }}</a> - ({{ serie.etat }})</li>
-
+            <img src="https://img.icons8.com/flat-round/64/000000/book.png"/>  {{ serie.nom }} : <a class="link" href="{{ path('view_series_categ', {idCateg: serie.categorie.id}) }}">{{ serie.categorie.nom }}</a> - ({{ serie.etat }})</li>
+        </div>
     {% endfor %}
-   </ul>
-    <br>
-    <br>
-    <br>
-    <br>
+</div>
 
 {% endblock %}
