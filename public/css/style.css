@@ -488,3 +488,37 @@ input[type="radio"]:checked ~ label .fa-star:before{
 .listeediteur{
     font-size:28px;
 }
+.titreSerie{
+    font-size:38px;
+    margin:20px;
+}
+.createurManga{
+    margin:50px;
+}
+.link:hover::after{
+    width: 100%;
+
+}
+.link::after{
+    content: ' ';
+    display: block;
+    width: 0;
+    height: 2px;
+    background:white;
+    transition: width .2s;
+
+}
+.link{
+    display: inline-block;
+    color: white;
+
+}
+.link:hover{
+    text-decoration: none;
+    color:#4abc96;
+
+}
+.serieCategorie{
+    margin:20px;
+    font-size:24px;
+}
