@@ -30,7 +30,10 @@ class MangaType extends AbstractType
             ->add('nbPage', TextType::class,array('label'=>'Nombre de page'))
             ->add('numTome',IntegerType ::class,array('label'=>'Numéros du Tome'))
             ->add('prixManga',MoneyType::class,array('label'=>'Prix du manga'))
-            ->add('descManga', TextareaType::class,array('label'=>'Description'))
+            ->add('descManga', TextareaType::class, [
+                'label' => 'Description',
+                'attr' => ['minlength' => 90]
+            ])
             ->add('image', FileType::class, [
                 'label' => 'Insérez une image',
                 'mapped' => false,

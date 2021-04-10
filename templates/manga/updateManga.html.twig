@@ -8,12 +8,13 @@
 
 {% block title %}Mise à jour du manga{% endblock %}
 
-{% block h1 %}
-    <h1 class="titremanga">Mise à jour du manga</h1>
-    <br><br>
-{% endblock %}
+
 
 {% block body %}
+
+    <h1 class="titremanga">Mise à jour du manga</h1>
+    <br>
+
     {{ form_start(form) }}
     <div class="my-custom-class-for-errors">
         {{ form_errors(form) }}
@@ -37,7 +38,13 @@
 
     {{ form_row(form.image, {'value' : manga.image }) }}
 
+    {{ form_row(form.prixManga)}}
+    {{ form_row(form.descManga)}}
+    {{ form_row(form.dateParution)}}
+    {{ form_row(form.save, {'label': 'Modifier'}) }}
+
     {{ form(form) }}
+
 
     {{ form_end(form) }}
 {% endblock %}
