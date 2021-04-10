@@ -267,11 +267,33 @@ select.form-control{
 
 }
 
+.containerMere{
+    display: flex;
+    width:100%;
+
+}
+
+.searchForm{
+    width:20%;
+    background-color: #fff;
+    color:#000000;
+}
+
+.searchForm form{
+    color:#000000;
+    width:80%;
+}
+
+.listManga{
+    width:80%;
+}
+
 .rowManga{
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
     margin:20px 0;
+    width:100%;
 }
 
 form#form_login{

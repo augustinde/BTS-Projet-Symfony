@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\SearchManga;
 use App\Form\CommenterType;
 use App\Entity\Commenter;
 use App\Entity\Manga;
 use App\Form\MangaType;
+use App\Form\SearchMangaFormType;
 use DateTime;
 use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
@@ -99,16 +101,37 @@ class MangaController extends AbstractController
     /**
      * @Route("listemangas", name="list_mangas")
      * @param EntityManagerInterface $em
+     * @param Request $request
      * @return Response
-     *
      */
-    public function listMangas(EntityManagerInterface $em){
+    public function listMangas(EntityManagerInterface $em, Request $request): Response
+    {
         $repositoryManga= $em->getRepository('App\Entity\Manga');
-        $mangaCollection=$repositoryManga->findAll();
+        $mangaCollection=$repositoryManga->findAllAsc();
 
         dump($mangaCollection);
 
-        return $this->render('manga/list_mangas.html.twig',['mangaCollection'=>$mangaCollection]);
+        $searchManga = new SearchManga();
+
+        $form_searchManga = $this->createForm(SearchMangaFormType::class,$searchManga);
+        $form_searchManga->handleRequest($request);
+
+        if($form_searchManga->isSubmitted() && $form_searchManga->isValid()){
+
+            $mangaCollection = [];
+            $dataSearch = new SearchManga();
+
+            $dataSearch->setCategorie($form_searchManga->get('categorie')->getData());
+            $dataSearch->setEditeur($form_searchManga->get('editeur')->getData());
+            $dataSearch->setDessinateur($form_searchManga->get('dessinateur')->getData());
+            $dataSearch->setScenariste($form_searchManga->get('scenariste')->getData());
+            $dataSearch->setNom($form_searchManga->get('nom')->getData());
+            dump($dataSearch);
+            $mangaCollection = $repositoryManga->findSearch($dataSearch);
+            dump($mangaCollection);
+        }
+
+        return $this->render('manga/list_mangas.html.twig',['formSearch' => $form_searchManga->createView(), 'mangaCollection'=>$mangaCollection]);
 
     }
 
