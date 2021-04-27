@@ -68,4 +68,52 @@ class PersonneController extends AbstractController
 
     }
 
+    /**
+     * @Route("listePersonne", name="list-personne")
+     * @param EntityManagerInterface $em
+     */
+
+    public function listPersonne(EntityManagerInterface $em): Response{
+        $repoPersonne = $em->getRepository('App\Entity\Personne');
+        $personneCollection = $repoPersonne->findAll();
+
+
+        return $this->render('personne/listPersonne.html.twig',['personneCollection'=>$personneCollection]);
+    }
+
+
+    /**
+     * @Route("updatePersonne/{idPersonne}", name="update_personne")
+     * @param Request $request
+     * @param int $idPersonne
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function updatePersonne(Request $request, int $idPersonne, EntityManagerInterface $em){
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $repoPersonne = $em->getRepository('App\Entity\Personne');
+        $personne = $repoPersonne->findOneBy(['id' => $idPersonne]);
+
+        $form_update_personne = $this->createForm(PersonneType::class, $personne);
+        $form_update_personne->handleRequest($request);
+
+        if($form_update_personne->isSubmitted() && $form_update_personne->isValid()){
+
+
+            $personne->setNom($form_update_personne->get('nom')->getData());
+            $personne->setPrenom($form_update_personne->get('prenom')->getData());
+            $personne->setType($form_update_personne->get('type')->getData());
+
+            $em->flush();
+        }
+
+        return $this->render(
+            'personne/updatePersonne.html.twig',
+            [
+                'personne'=>$personne,
+                'form'=>$form_update_personne->createView(),
+            ]);
+    }
+
 }

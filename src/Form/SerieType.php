@@ -25,7 +25,7 @@ class SerieType extends AbstractType
             ->add('nom')
             ->add('etat', ChoiceType::class, [
                 'choices' => [
-                    'En cours de parution' => 'en_cours',
+                    'En cours de parution' => 'en cours de parution',
                     'Terminé' => 'termine'
                 ]
             ])

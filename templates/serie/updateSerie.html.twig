@@ -1,0 +1,48 @@
+{% if is_granted('ROLE_ADMIN') %}
+    {% set base = 'administrateur/baseAdministrateur.html.twig' %}
+{% else %}
+    {% set base = 'utilisateur/baseUser.html.twig' %}
+{% endif %}
+
+    {% extends base %}
+
+{% block title %}Mise à jour de la série{% endblock %}
+
+
+
+{% block body %}
+
+    <h1 class="titremanga">Mise à jour de la série</h1>
+    <br>
+
+    {{ form_start(form) }}
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+    <div class="row">
+        <div class="col">
+            {{ form_row(form.nom) }}
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col">
+
+            {{ form_row(form.etat)}}
+        </div>
+        <div class="col" id="some-custom-id">
+            {{ form_row(form.categorie) }}
+
+        </div>
+    </div>
+
+
+    {{ form_row(form.editeur)}}
+    {{ form_row(form.scenariste)}}
+    {{ form_row(form.dessinateur)}}
+    {{ form_row(form.save, {'label': 'Modifier'}) }}
+
+    {{ form(form) }}
+
+    {{ form_end(form) }}
+{% endblock %}
