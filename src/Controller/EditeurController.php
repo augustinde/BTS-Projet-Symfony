@@ -103,4 +103,36 @@ class EditeurController extends AbstractController
 
     }
 
+    /**
+     * @Route("updateEditeur/{idEditeur}", name="update_editeur")
+     * @param Request $request
+     * @param int $idEditeur
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function updateEditeur(Request $request, int $idEditeur, EntityManagerInterface $em){
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+        $repoEditeur = $em->getRepository('App\Entity\Editeur');
+        $editeur = $repoEditeur->findOneBy(['id' => $idEditeur]);
+
+        $form_update_editeur = $this->createForm(EditeurType::class, $editeur);
+        $form_update_editeur->handleRequest($request);
+
+        if($form_update_editeur->isSubmitted() && $form_update_editeur->isValid()){
+
+
+            $editeur->setNom($form_update_editeur->get('nom')->getData());
+
+            $em->flush();
+        }
+
+        return $this->render(
+            'editeur/updateEditeur.html.twig',
+            [
+                'editeur'=>$editeur,
+                'form'=>$form_update_editeur->createView(),
+            ]);
+    }
+
 }

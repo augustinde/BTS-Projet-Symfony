@@ -19,7 +19,9 @@
 
     {% for editeur in editeurCollection %}
 
-        <img src="https://img.icons8.com/pastel-glyph/68/000000/person-male--v2.png"/> Auteur : {{ editeur.nom }} : Nombre de séries : {{ editeur.series|length }}
+        <img src="https://img.icons8.com/pastel-glyph/68/000000/person-male--v2.png"/>
+            Nom : {{ editeur.nom }} - Nombre de séries : {{ editeur.series|length }}
+        <a href="{{ path('update_editeur', {idEditeur: editeur.id}) }}">Modifier</a>
             <ol class="shortcut">
                 {% for serie in editeur.series%}
 

@@ -1,0 +1,32 @@
+{% if is_granted('ROLE_ADMIN') %}
+    {% set base = 'administrateur/baseAdministrateur.html.twig' %}
+{% else %}
+    {% set base = 'utilisateur/baseUser.html.twig' %}
+{% endif %}
+
+    {% extends base %}
+
+{% block title %}Liste des personnes{% endblock %}
+
+
+
+{% block body %}
+
+    <div class="containerMere">
+        <div class="listPersonne" style="width:100%;">
+            <h1 class="titremanga">Liste des personnes</h1>
+            <br><br>
+            {% if personneCollection is not empty %}
+
+                <ul>
+                    {% for personne in personneCollection %}
+                        <li>{{ personne.nom }} {{ personne.prenom }} <a href="{{ path('update_personne', {idPersonne: personne.id}) }}">Modifier</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <h3 style="text-align: center;">Il n'y a aucune personne !</h3>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
