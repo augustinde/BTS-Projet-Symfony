@@ -3,7 +3,7 @@
 
 ## Récupérer le projet
 
-    git clone https://github.com/augustinde/mangathequeSymfony.git
+`git clone https://github.com/augustinde/mangathequeSymfony.git`
 
 ## Créé la branche dev puis la faire pointer sur la branche distante
 
@@ -16,7 +16,7 @@
 
 ## Installation des dépendances composer
 
-    composer install 
+  `composer install`
 
 ## Créé un controller
     
