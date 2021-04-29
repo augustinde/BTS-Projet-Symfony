@@ -53,9 +53,9 @@ class MangaRepository extends ServiceEntityRepository
                 ->setParameter('editeur', $searchManga->getEditeur());
 
         }
-        if(!empty($searchManga->getNom())){
-            $query->andWhere('s.nom LIKE :nom')
-                ->setParameter('nom', '%'.$searchManga->getNom().'%');
+        if(!empty($searchManga->getIdSerie())){
+            $query->andWhere('m.serie = :idSerie')
+                ->setParameter('idSerie', $searchManga->getIdSerie());
 
         }
         return $query->getQuery()->getResult();

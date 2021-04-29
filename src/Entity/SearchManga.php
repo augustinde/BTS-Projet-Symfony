@@ -11,7 +11,7 @@ class SearchManga
     private $editeur;
     private $scenariste;
     private $dessinateur;
-    private $nom;
+    private $idSerie;
 
 
     /**
@@ -78,25 +78,23 @@ class SearchManga
         $this->dessinateur = $dessinateur;
     }
 
+
+
     /**
      * @return mixed
      */
-    public function getNom()
+    public function getIdSerie()
     {
-        return $this->nom;
+        return $this->idSerie;
     }
 
     /**
-     * @param mixed $nom
+     * @param mixed $idSerie
      */
-    public function setNom($nom): void
+    public function setIdSerie($idSerie): void
     {
-        $this->nom = $nom;
+        $this->idSerie = $idSerie;
     }
-
-
-
-
 
 
 }
