@@ -120,11 +120,11 @@ class MangaController extends AbstractController
             $mangaCollection = [];
             $dataSearch = new SearchManga();
 
+            $dataSearch->setIdSerie($form_searchManga->get('idSerie')->getData());
             $dataSearch->setCategorie($form_searchManga->get('categorie')->getData());
             $dataSearch->setEditeur($form_searchManga->get('editeur')->getData());
             $dataSearch->setDessinateur($form_searchManga->get('dessinateur')->getData());
             $dataSearch->setScenariste($form_searchManga->get('scenariste')->getData());
-            $dataSearch->setNom($form_searchManga->get('nom')->getData());
             $mangaCollection = $repositoryManga->findSearch($dataSearch);
         }
 

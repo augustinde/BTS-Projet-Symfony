@@ -8,7 +8,10 @@
 
 {% block title %}Manga supprimé{% endblock %}
 
-{% block h1 %}
+{% block body %}
     <h1 class="titremanga">Le tome {{ manga.numTome }} de {{ manga.serie.nom }} à été supprimé.</h1>
-    <br><br>
+    <br>
+    <p style="text-align: center;">Vous pouvez retourner à l'<a href="{{ path('list_mangas') }}">accueil</a> du site.</p>
+    <br>
+    <br>
 {% endblock %}

@@ -23,10 +23,12 @@ class SearchMangaFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom', EntityType::class, [
+            ->add('idSerie', EntityType::class, [
                 'required' => false,
                 'class' => Serie::class,
-                'choice_label' => 'nom'
+                'choice_label' => 'nom',
+                'choice_value' => 'id',
+                'label' => 'Nom de la série'
             ])
             ->add('dessinateur', EntityType::class, [
                 'required' => false,
