@@ -14,7 +14,7 @@
 
         <li class="nav1"><a href="{{ path('list_mangas') }}">Utilisateur</a></li>
         <li class="nav2"><a href="{{ path('list_mangas') }}">Manga</a></li>
-        <li class="nav3"><a href="">Séries</a></li>
+        <li class="nav3"><a href="{{ path('list_series') }}">Séries</a></li>
 
         {% if is_granted('ROLE_USER')%}
             <li class="nav4"><a href="{{ path('app_logout') }}">Déconnexion</a></li>

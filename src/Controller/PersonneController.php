@@ -39,7 +39,6 @@ class PersonneController extends AbstractController
         $resultat='Complétez le formulaire pour inserer une personne';
 
         if($form->isSubmitted()&&$form->isValid()){
-            dump($personne);
             $em->persist($personne);
             $em->flush();
             $resultat='Personne inséré avec l\'id'.$personne->getId();
@@ -59,7 +58,6 @@ class PersonneController extends AbstractController
     {
         $repoSerie = $em->getRepository("App\Entity\Serie");
         $serieCollection = $repoSerie->findByDessinateurOrScenariste($idPersonne);
-        dump($serieCollection);
         $repoPersonne = $em->getRepository("App\Entity\Personne");
         $personne = $repoPersonne->findOneBy(['id' => $idPersonne]);
 
