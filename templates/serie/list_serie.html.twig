@@ -1,0 +1,32 @@
+{% if is_granted('ROLE_ADMIN') %}
+    {% set base = 'administrateur/baseAdministrateur.html.twig' %}
+{% else %}
+    {% set base = 'utilisateur/baseUser.html.twig' %}
+{% endif %}
+
+    {% extends base %}
+
+{% block title %}Liste des séries{% endblock %}
+
+
+
+{% block body %}
+
+    <div class="containerMere">
+        <div class="listSerie" style="width:100%;">
+            <h1 class="titremanga">Liste des séries</h1>
+            <br><br>
+            {% if serieCollection is not empty %}
+
+                <ul>
+                    {% for serie in serieCollection %}
+                        <li>{{ serie.nom }} <a href="{{ path('update_serie', {idSerie: serie.id}) }}">Modifier</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <h3 style="text-align: center;">Il n'y a aucune série !</h3>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

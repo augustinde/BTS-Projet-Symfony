@@ -6,9 +6,11 @@ use App\Repository\SerieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Annotations\Annotation;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=SerieRepository::class)
+ * @UniqueEntity(fields={"nom"}, message="Cette série existe déjà.")
  */
 class Serie
 {
@@ -33,9 +35,9 @@ class Serie
      * @ORM\OneToMany(targetEntity="Manga", mappedBy="serie")
      */
     private $mangas;
-
+    
     /**
-     * @ORM\OneToOne(targetEntity="Categorie")
+     * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="series")
      * @ORM\JoinColumn(name="categ_id", referencedColumnName="id")
      */
     private $categorie;

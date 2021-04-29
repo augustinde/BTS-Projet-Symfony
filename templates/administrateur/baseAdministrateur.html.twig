@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block navbar %}
+
+    <div class="barreMobile">
+        <div class="containerBarreMobile" id="ctb" onclick="FunctionIconMobile(this)">
+            <div class="bar1"></div>
+            <div id="b2" class="bar2"></div>
+            <div class="bar3"></div>
+        </div>
+    </div>
+
+    <ul class="navbar" id="navId">
+
+        <li class="nav1"><a href="{{ path('list_mangas') }}">Administrateur</a></li>
+        <div class="navdropdown nav2">
+            <button class="dropbtn">Manga
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="{{ path('create_manga') }}">Ajouter un manga</a>
+                <a href="{{ path('list_mangas') }}">Liste des mangas</a>
+            </div>
+        </div>
+
+        <div class="navdropdown nav3">
+            <button class="dropbtn">Série
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="{{ path('create_serie') }}">Ajouter une série</a>
+                <a href="{{ path('list_series') }}">Liste des séries</a>
+            </div>
+        </div>
+
+        <div class="navdropdown nav4">
+            <button class="dropbtn">Personne
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="{{ path('create_personne') }}">Ajouter une personne</a>
+                <a href="{{ path('list-personne') }}">Liste des personnes</a>
+            </div>
+        </div>
+
+        <div class="navdropdown nav5">
+            <button class="dropbtn">Editeur
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="{{ path('create_editeur') }}">Ajouter un éditeur</a>
+                <a href="{{ path('list-editeur') }}">Liste des éditeurs</a>
+            </div>
+        </div>
+
+        <li class="nav7"><a href="{{ path('app_logout') }}">Déconnexion</a></li>
+
+    </ul>
+
+{% endblock %}
+

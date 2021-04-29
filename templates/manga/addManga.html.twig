@@ -1,14 +1,45 @@
-{% extends 'base.html.twig' %}
+{% extends 'administrateur/baseAdministrateur.html.twig' %}
 
-{% block title %}Hello MangaController!{% endblock %}
+{% block title %}Ajout d'un manga{% endblock %}
+
+{% block h1 %}
+    <h1 class="titremanga">Ajout d'un manga</h1>
+    <br><br>
+{% endblock %}
+
 
 
 {% block body %}
+
+    {% if resultat.res is defined %}
+
+        <div id="snackbar">{{ resultat.message }}</div>
+        <script>
+            var couleur;
+            {% if resultat.res == 'error' %}
+                couleur = '#E74C3C';
+            {% else %}
+                couleur = '#27AE60';
+            {% endif %}
+            var x = document.getElementById("snackbar");
+
+            // Add the "show" class to DIV
+            x.className = "show";
+            x.style.backgroundColor = couleur;
+
+            // After 3 seconds, remove the show class from DIV
+            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);</script>
+    {% endif %}
 
     <div>
         {{ form_start(form) }}
         <div class="my-custom-class-for-errors">
             {{ form_errors(form) }}
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_row(form.serie) }}
+            </div>
         </div>
         <div class="row">
 
@@ -21,14 +52,17 @@
 
             </div>
         </div>
+
+        {{ form_row(form.image, {
+            attr: {
+                'placeholder': 'Choisir une image'
+            }
+        }) }}
+
         {{ form(form) }}
 
-
-
-
         {{ form_end(form) }}
-    </div>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <br><br><br><br><br><br><br><br><br><br><br>
+
+    <br><br><br>
 
 {% endblock %}

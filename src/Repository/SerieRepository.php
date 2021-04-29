@@ -36,15 +36,16 @@ class SerieRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Serie
+
+    public function findByDessinateurOrScenariste($id): ?array
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('s.dessinateur = :id')
+            ->orWhere('s.scenariste = :id')
+            ->setParameter('id', $id)
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getresult()
         ;
     }
-    */
+
 }

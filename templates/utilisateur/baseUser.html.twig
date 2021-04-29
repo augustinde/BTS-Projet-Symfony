@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block navbar %}
+
+    <div class="barreMobile">
+        <div class="containerBarreMobile" id="ctb" onclick="FunctionIconMobile(this)">
+            <div class="bar1"></div>
+            <div id="b2" class="bar2"></div>
+            <div class="bar3"></div>
+        </div>
+    </div>
+
+    <ul class="navbar" id="navId">
+
+        <li class="nav1"><a href="{{ path('list_mangas') }}">Utilisateur</a></li>
+        <li class="nav2"><a href="{{ path('list_mangas') }}">Manga</a></li>
+        <li class="nav3"><a href="">Séries</a></li>
+
+        {% if is_granted('ROLE_USER')%}
+            <li class="nav4"><a href="{{ path('app_logout') }}">Déconnexion</a></li>
+        {% else %}
+            <li class="nav5"><a href="{{ path('app_register') }}">Inscription</a></li>
+            <li class="nav6"><a href="{{ path('app_login') }}">Connexion</a></li>
+        {% endif %}
+    </ul>
+
+
+{% endblock %}

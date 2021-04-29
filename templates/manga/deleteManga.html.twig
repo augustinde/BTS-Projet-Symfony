@@ -1,0 +1,14 @@
+{% if is_granted('ROLE_ADMIN') %}
+    {% set base = 'administrateur/baseAdministrateur.html.twig' %}
+{% else %}
+    {% set base = 'utilisateur/baseUser.html.twig' %}
+{% endif %}
+
+    {% extends base %}
+
+{% block title %}Manga supprimé{% endblock %}
+
+{% block h1 %}
+    <h1 class="titremanga">Le tome {{ manga.numTome }} de {{ manga.serie.nom }} à été supprimé.</h1>
+    <br><br>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% if is_granted('ROLE_ADMIN') %}
+    {% set base = 'administrateur/baseAdministrateur.html.twig' %}
+{% else %}
+    {% set base = 'utilisateur/baseUser.html.twig' %}
+{% endif %}
+
+    {% extends base %}
+
+{% block title %}Mise à jour de la personne{% endblock %}
+
+
+
+{% block body %}
+
+    <h1 class="titremanga">Mise à jour de la personne</h1>
+    <br>
+
+    {{ form_start(form) }}
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+
+
+    {{ form_row(form.nom)}}
+    {{ form_row(form.prenom)}}
+    {{ form_row(form.type)}}
+    {{ form_row(form.save, {'label': 'Modifier'}) }}
+
+    {{ form(form) }}
+
+
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,11 @@
+<h1>Confirmation de votre email.</h1>
+
+<p>
+    Pour confirmer la création de votre email, cliquez sur le lien suivant: <br><br>
+    <a href="{{ signedUrl|raw }}">Je confirme mon email</a>. <br>
+    Le lien expire dans {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+</p>
+
+<p>
+    L'équipe Mangachat
+</p>

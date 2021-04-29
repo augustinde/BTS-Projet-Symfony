@@ -1,0 +1,62 @@
+{% if is_granted('ROLE_ADMIN') %}
+    {% set base = 'administrateur/baseAdministrateur.html.twig' %}
+{% else %}
+    {% set base = 'utilisateur/baseUser.html.twig' %}
+{% endif %}
+
+    {% extends base %}
+
+{% block title %}Liste des mangas{% endblock %}
+
+
+
+{% block body %}
+
+    <div class="containerMere">
+        <div class="searchForm">
+            <br>
+            <h2 style="text-align: center">Rechercher un manga</h2>
+            <br>
+            {{ form(formSearch) }}
+            <br>
+        </div>
+        <div class="listManga">
+            <h1 class="titremanga">Liste des mangas</h1>
+            <br><br>
+            {% if mangaCollection is not empty %}
+
+                <div class="rowManga">
+                    {% for manga in mangaCollection %}
+                        <div class="card" style="width: 18rem;">
+                            <span class="iconInfo
+                            {% if manga.serie.etat == 'en cours de parution' %}
+                                iconInfoEnCours
+                                "><i class="far fa-edit"></i>
+                            {% else %}
+                                iconInfoTermine
+                                "><i class="fas fa-check"></i>
+                            {% endif %}
+                            Ce manga est {{ manga.serie.etat|lower }}.</span>
+                            <img src="../../public/uploads/{{ manga.image }}" class="card-img-top" alt="{{ manga.serie.nom }}" style="margin-top:44px; height: 300px;">
+                            <div class="card-body cardb">
+                                <h5 class="card-title">{{manga.serie.nom }} - Tome {{ manga.numTome }}</h5>
+                                <p class="card-text">{{ manga.descManga|striptags|slice(0,90) }}...</p>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <div class="inputAdminManga">
+                                        <a href="{{ path('update_manga', {idManga: manga.id}) }}" class="btn btn-warning">Modifier <i class="fas fa-reply"></i></a>
+                                        <a href="{{ path('delete_manga', {idManga: manga.id}) }}" class="btn btn-danger">Supprimer <i class="fas fa-reply"></i></a>
+                                    </div>
+                                {% endif %}
+                                <br>
+                                <a href="{{ path('view_manga', {idManga: manga.id}) }}" class="btn btn-primary btnclick">Y allez ...<i class="fas fa-reply"></i></a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <h3 style="text-align: center;">Il n'y a aucun manga !</h3>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

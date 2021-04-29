@@ -1,0 +1,9 @@
+{%- block radioStar_row -%}
+
+    <div class="rateBox">
+        {%- for child in form %}
+            <input type="radio" required="required" id="{{ child.vars.id }}"  name="{{ full_name }}" {% if child.vars.value is not empty %}value="{{ child.vars.value }}" {% endif %}/>
+            <label for="{{ child.vars.id }}"><i class="fa fa-fw fa-star fa-lg"></i></label>
+        {% endfor -%}
+    </div>
+{%- endblock radioStar_row -%}
