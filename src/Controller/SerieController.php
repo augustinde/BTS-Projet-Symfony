@@ -40,7 +40,6 @@ class SerieController extends AbstractController
         $resultat='Complétez le formulaire pour inserer une série';
 
         if($form->isSubmitted()&&$form->isValid()){
-            dump($serie);
             $em->persist($serie);
             $em->flush();
             $resultat='Serie inséré avec l\'id'.$serie->getId();

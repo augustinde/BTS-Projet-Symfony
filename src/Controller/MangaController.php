@@ -109,7 +109,6 @@ class MangaController extends AbstractController
         $repositoryManga= $em->getRepository('App\Entity\Manga');
         $mangaCollection=$repositoryManga->findAllAsc();
 
-        dump($mangaCollection);
 
         $searchManga = new SearchManga();
 
@@ -126,9 +125,7 @@ class MangaController extends AbstractController
             $dataSearch->setDessinateur($form_searchManga->get('dessinateur')->getData());
             $dataSearch->setScenariste($form_searchManga->get('scenariste')->getData());
             $dataSearch->setNom($form_searchManga->get('nom')->getData());
-            dump($dataSearch);
             $mangaCollection = $repositoryManga->findSearch($dataSearch);
-            dump($mangaCollection);
         }
 
         return $this->render('manga/list_mangas.html.twig',['formSearch' => $form_searchManga->createView(), 'mangaCollection'=>$mangaCollection]);
